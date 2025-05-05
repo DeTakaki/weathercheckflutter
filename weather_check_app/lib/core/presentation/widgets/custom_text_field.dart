@@ -28,7 +28,7 @@ class CustomTextField extends StatelessWidget {
           title,
           textAlign: TextAlign.start,
           style: const TextStyle(
-              fontWeight: FontWeight.w600, color: AppColors.lightGray),
+              fontWeight: FontWeight.w600, color: AppColors.lighterTextColor),
         ),
         gapH2,
         TextFormField(
@@ -43,12 +43,12 @@ class CustomTextField extends StatelessWidget {
             hintText: hint ?? '',
             hintStyle: const TextStyle(color: AppColors.lighterTextColor),
             errorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red)),
+                borderSide: BorderSide(color: AppColors.softRed)),
             focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.primary),
             ),
             enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.lightGray),
+              borderSide: BorderSide(color: AppColors.borderColor),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: Sizes.p8,

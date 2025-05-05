@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:weather_checking/constants/app_colors.dart';
 import 'package:weather_checking/constants/sizes.dart';
 import 'package:weather_checking/core/presentation/widgets/custom_text_field.dart';
 
@@ -23,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surfaceColor,
       body: Form(
         key: _formKey,
         child: Center(
@@ -32,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SvgPicture.asset('./assets/icons/app_logo.svg'),
                 CustomTextField(
                     title: 'Login',
                     textController: loginController,
@@ -57,9 +60,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         _formKey.currentState?.validate();
                       },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.backgroundColor,
+                      ),
                       iconAlignment: IconAlignment.end,
-                      icon: Icon(Icons.arrow_right_alt_rounded),
-                      label: const Text('LOGIN')),
+                      icon: const Icon(
+                        Icons.arrow_right_alt_rounded,
+                        color: AppColors.accentColor,
+                      ),
+                      label: const Text(
+                        'LOGIN',
+                        style: TextStyle(color: AppColors.textColor),
+                      )),
                 ),
               ],
             ),
