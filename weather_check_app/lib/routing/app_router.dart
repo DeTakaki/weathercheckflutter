@@ -13,6 +13,8 @@ final router = GoRouter(initialLocation: RoutesStrings.login, routes: [
   GoRoute(
     name: RoutesStrings.mainScreen,
     path: RoutesStrings.mainScreen,
-    builder: (context, state) => const DashboardScreen(),
+    builder: (context, state) => DashboardScreen(
+      name: state.pathParameters['userName'] as String,
+    ),
   )
 ]);

@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:weather_checking/routing/routes_strings.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+  const DashboardScreen({super.key, required this.name});
+
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,7 @@ class DashboardScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('main screen'),
+          Text('Hi $name'),
           ElevatedButton(
               onPressed: () {
                 context.goNamed(RoutesStrings.login);

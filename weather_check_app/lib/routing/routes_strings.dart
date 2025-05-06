@@ -1,4 +1,4 @@
 class RoutesStrings {
   static const login = '/login';
-  static const mainScreen = '/main';
+  static const mainScreen = '/main/:userName';
 }
