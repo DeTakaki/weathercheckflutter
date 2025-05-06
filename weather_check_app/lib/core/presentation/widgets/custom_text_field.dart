@@ -34,7 +34,6 @@ class CustomTextField extends StatelessWidget {
         TextFormField(
           onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           controller: textController,
-          keyboardType: TextInputType.number,
           validator: validator,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           textInputAction: TextInputAction.next,
