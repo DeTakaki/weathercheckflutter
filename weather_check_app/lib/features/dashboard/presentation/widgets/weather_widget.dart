@@ -31,14 +31,14 @@ class WeatherWidget extends StatelessWidget {
             ],
           ),
           EasyRichText(
-            '${weather.temperature} degrees Celsius',
+            '${weather.temperature.toStringAsFixed(0)} degrees Celsius',
             defaultStyle: const TextStyle(
                 fontSize: Sizes.p32,
                 color: AppColors.textColor,
                 fontWeight: FontWeight.w300),
             patternList: [
               EasyRichTextPattern(
-                targetString: '${weather.temperature}',
+                targetString: weather.temperature.toStringAsFixed(0),
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),
@@ -46,14 +46,14 @@ class WeatherWidget extends StatelessWidget {
             ],
           ),
           EasyRichText(
-            'It feels like ${weather.feelsLike} degrees Celsius',
+            'It feels like ${weather.feelsLike.toStringAsFixed(0)} degrees Celsius',
             defaultStyle: const TextStyle(
                 fontSize: Sizes.p32,
                 color: AppColors.textColor,
                 fontWeight: FontWeight.w300),
             patternList: [
               EasyRichTextPattern(
-                targetString: '${weather.feelsLike}',
+                targetString: weather.feelsLike.toStringAsFixed(0),
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),

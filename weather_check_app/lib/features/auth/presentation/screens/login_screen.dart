@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:weather_checking/constants/app_colors.dart';
 import 'package:weather_checking/constants/sizes.dart';
 import 'package:weather_checking/core/domain/user.dart';
+import 'package:weather_checking/core/presentation/widgets/custom_snackbar.dart';
 import 'package:weather_checking/core/presentation/widgets/custom_text_field.dart';
 import 'package:weather_checking/features/auth/presentation/provider/login_provider.dart';
 import 'package:weather_checking/features/dashboard/presentation/providers/location_provider.dart';
@@ -40,7 +41,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(loginUserStateProvider);
-
+    ref.watch(permissionProvider);
     ref.listen(loginUserStateProvider, (_, next) {
       next.whenOrNull(
         data: (success) {
@@ -50,6 +51,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           }
         },
       );
+    });
+
+    ref.listen(permissionProvider, (_, next) {
+      next.whenOrNull(
+        error: (error, _) => CustomSnackBar.showSnackBar(
+            backgroundColor: AppColors.softRed,
+            messageColor: Colors.white,
+            message: error.toString()),
+      );
+      next.whenData((data) {
+        debugPrint('no errors! =D');
+      });
     });
 
     return Scaffold(

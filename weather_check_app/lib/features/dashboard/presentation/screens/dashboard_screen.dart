@@ -26,6 +26,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
   Color weatherBackgroundColor = AppColors.surfaceColor;
   late AnimationController _slideController;
   late Animation<Offset> _slideAnimation;
+  bool userDeniedLocation = false;
 
   @override
   void initState() {
@@ -58,9 +59,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
   Widget build(BuildContext context) {
     final state = ref.watch(getWeatherStatusProvider);
     final locationProviderState = ref.watch(locationProvider);
-    ref.listen(locationProvider, (_, next) {
+    ref.listen(locationProvider, (previous, next) {
       next.whenOrNull(
-        error: (error, stackTrace) => debugPrint('ERRADO ${error.toString()}'),
+        error: (error, stackTrace) => setState(() {
+          userDeniedLocation = true;
+        }),
         data: (data) {
           if (data != null) {
             ref.read(getWeatherQueryProvider.notifier).state = Some(
@@ -149,11 +152,28 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
                         if (weather != null) {
                           return WeatherWidget(weather: weather);
                         } else {
-                          return const Text('No weather conditions');
+                          return const SizedBox.shrink();
                         }
                       },
                       error: (error, _) => Text('error $error'),
                       loading: () => const LinearProgressIndicator()),
+                  if (userDeniedLocation)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Sizes.p8),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.sentiment_very_dissatisfied_outlined,
+                            size: Sizes.p64,
+                          ),
+                          gapH2,
+                          Text(
+                            'It was not possible to retrieve the weather for your location :(\n\nPlease check ir your location settings are enabled and if location permission is also enabled!',
+                            style: TextStyle(fontSize: Sizes.p24),
+                          ),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ],
