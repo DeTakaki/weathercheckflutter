@@ -8,6 +8,7 @@ import 'package:weather_checking/constants/sizes.dart';
 import 'package:weather_checking/core/domain/user.dart';
 import 'package:weather_checking/core/presentation/widgets/custom_text_field.dart';
 import 'package:weather_checking/features/auth/presentation/provider/login_provider.dart';
+import 'package:weather_checking/features/dashboard/presentation/providers/location_provider.dart';
 import 'package:weather_checking/routing/routes_strings.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {

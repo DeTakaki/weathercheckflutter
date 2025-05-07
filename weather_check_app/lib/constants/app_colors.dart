@@ -14,4 +14,7 @@ class AppColors {
 
   // Error
   static const softRed = Color(0xFFFF6F61);
+
+  // Cooler colors
+  static const coolBlue = Color(0xFFE3F2FD);
 }
