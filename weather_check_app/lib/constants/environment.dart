@@ -1,1 +1,1 @@
-const String baseUrl = 'https://api.openweathermap.org/data/3.0/onecall';
+const String baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
