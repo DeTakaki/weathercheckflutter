@@ -3,7 +3,8 @@ class Weather {
     required this.cityName,
     required this.description,
     required this.temperature,
-    required this.feelsLike,
+    required this.high,
+    required this.low,
     required this.humidity,
     required this.seaLevel,
     required this.windSpeed,
@@ -13,7 +14,8 @@ class Weather {
   final String cityName;
   final String description;
   final double temperature;
-  final double feelsLike;
+  final double high;
+  final double low;
   final int humidity;
   final int seaLevel;
   final double windSpeed;
@@ -24,7 +26,8 @@ class Weather {
       cityName: map['name'] as String,
       description: map['weather'][0]['description'] as String,
       temperature: (map['main']['temp'] as num).toDouble(),
-      feelsLike: (map['main']['feels_like'] as num).toDouble(),
+      high: (map['main']['temp_max'] as num).toDouble(),
+      low: (map['main']['temp_min'] as num).toDouble(),
       humidity: map['main']['humidity'] as int,
       seaLevel: map['main']['sea_level'] as int,
       windSpeed: (map['wind']['speed'] as num).toDouble(),
@@ -34,7 +37,7 @@ class Weather {
 
   @override
   String toString() {
-    return 'Weather(cityName: $cityName, description: $description, temperature: $temperature, feelsLike: $feelsLike, humidity: $humidity, seaLevel: $seaLevel, windSpeed: $windSpeed, windDegrees: $windDegrees)';
+    return 'Weather(cityName: $cityName, description: $description, temperature: $temperature, high: $high, low: $low, humidity: $humidity, seaLevel: $seaLevel, windSpeed: $windSpeed, windDegrees: $windDegrees)';
   }
 
   @override
@@ -44,10 +47,12 @@ class Weather {
     return other.cityName == cityName &&
         other.description == description &&
         other.temperature == temperature &&
-        other.feelsLike == feelsLike &&
+        other.high == high &&
+        other.low == low &&
         other.humidity == humidity &&
         other.seaLevel == seaLevel &&
-        other.windSpeed == windSpeed;
+        other.windSpeed == windSpeed &&
+        other.windDegrees == windDegrees;
   }
 
   @override
@@ -55,9 +60,11 @@ class Weather {
     return cityName.hashCode ^
         description.hashCode ^
         temperature.hashCode ^
-        feelsLike.hashCode ^
+        high.hashCode ^
+        low.hashCode ^
         humidity.hashCode ^
         seaLevel.hashCode ^
-        windSpeed.hashCode;
+        windSpeed.hashCode ^
+        windDegrees.hashCode;
   }
 }
