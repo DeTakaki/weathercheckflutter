@@ -46,14 +46,14 @@ class WeatherWidget extends StatelessWidget {
             ],
           ),
           EasyRichText(
-            'With a low of ${weather.low.toStringAsFixed(0)} degrees Celsius',
+            'With a low of ${weather.low} degrees Celsius',
             defaultStyle: const TextStyle(
                 fontSize: Sizes.p32,
                 color: AppColors.textColor,
                 fontWeight: FontWeight.w300),
             patternList: [
               EasyRichTextPattern(
-                targetString: weather.low.toStringAsFixed(0),
+                targetString: '${weather.low}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),
@@ -61,14 +61,14 @@ class WeatherWidget extends StatelessWidget {
             ],
           ),
           EasyRichText(
-            'And a high of ${weather.high.toStringAsFixed(0)} degrees Celsius',
+            'And a high of ${weather.high} degrees Celsius',
             defaultStyle: const TextStyle(
                 fontSize: Sizes.p32,
                 color: AppColors.textColor,
                 fontWeight: FontWeight.w300),
             patternList: [
               EasyRichTextPattern(
-                targetString: weather.high.toStringAsFixed(0),
+                targetString: '${weather.high}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),
