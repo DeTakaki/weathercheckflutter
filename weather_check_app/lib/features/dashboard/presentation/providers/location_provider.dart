@@ -31,7 +31,7 @@ final locationProvider = FutureProvider.autoDispose<Position?>((ref) async {
 
   return await Geolocator.getCurrentPosition(
     locationSettings: const LocationSettings(
-      accuracy: LocationAccuracy.medium,
+      accuracy: LocationAccuracy.low,
       timeLimit: Duration(seconds: 10),
     ),
   );

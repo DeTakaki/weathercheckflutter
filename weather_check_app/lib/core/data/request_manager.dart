@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:flutter/foundation.dart';
 
 abstract class HttpMethods {
   static const String post = 'POST';
@@ -30,13 +31,15 @@ class RequestManager {
       receiveTimeout: const Duration(seconds: 10),
     ));
 
-    dio.httpClientAdapter = IOHttpClientAdapter(createHttpClient: () {
-      final HttpClient client =
-          HttpClient(context: SecurityContext(withTrustedRoots: false));
-      client.badCertificateCallback =
-          ((X509Certificate certificate, String host, int port) => true);
-      return client;
-    });
+    if (!kIsWeb) {
+      dio.httpClientAdapter = IOHttpClientAdapter(createHttpClient: () {
+        final HttpClient client =
+            HttpClient(context: SecurityContext(withTrustedRoots: false));
+        client.badCertificateCallback =
+            ((X509Certificate certificate, String host, int port) => true);
+        return client;
+      });
+    }
 
     //TODO: Add an auth token to persist, in case it is needed
 

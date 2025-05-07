@@ -1,52 +1,60 @@
 class Weather {
   const Weather({
-    required this.name,
+    required this.cityName,
+    required this.description,
+    required this.temperature,
+    required this.feelsLike,
+    required this.humidity,
+    required this.seaLevel,
+    required this.windSpeed,
   });
-  final String name;
-}
 
-// {
-//   "coord": {
-//     "lon": -54.61,
-//     "lat": -20.48
-//   },
-//   "weather": [
-//     {
-//       "id": 800,
-//       "main": "Clear",
-//       "description": "clear sky",
-//       "icon": "01n"
-//     }
-//   ],
-//   "base": "stations",
-//   "main": {
-//     "temp": 295.04,
-//     "feels_like": 295.32,
-//     "temp_min": 295.04,
-//     "temp_max": 295.04,
-//     "pressure": 1015,
-//     "humidity": 78,
-//     "sea_level": 1015,
-//     "grnd_level": 948
-//   },
-//   "visibility": 10000,
-//   "wind": {
-//     "speed": 2.57,
-//     "deg": 70
-//   },
-//   "clouds": {
-//     "all": 0
-//   },
-//   "dt": 1746577767,
-//   "sys": {
-//     "type": 1,
-//     "id": 8347,
-//     "country": "BR",
-//     "sunrise": 1746525415,
-//     "sunset": 1746565987
-//   },
-//   "timezone": -14400,
-//   "id": 3467747,
-//   "name": "Campo Grande",
-//   "cod": 200
-// }
+  final String cityName;
+  final String description;
+  final double temperature;
+  final double feelsLike;
+  final int humidity;
+  final int seaLevel;
+  final double windSpeed;
+
+  factory Weather.fromMap(Map<String, dynamic> map) {
+    return Weather(
+      cityName: map['name'] as String,
+      description: map['weather'][0]['description'] as String,
+      temperature: (map['main']['temp'] as num).toDouble(),
+      feelsLike: (map['main']['feels_like'] as num).toDouble(),
+      humidity: map['main']['humidity'] as int,
+      seaLevel: map['main']['sea_level'] as int,
+      windSpeed: (map['wind']['speed'] as num).toDouble(),
+    );
+  }
+
+  @override
+  String toString() {
+    return 'Weather(cityName: $cityName, description: $description, temperature: $temperature, feelsLike: $feelsLike, humidity: $humidity, seaLevel: $seaLevel, windSpeed: $windSpeed)';
+  }
+
+  @override
+  bool operator ==(covariant Weather other) {
+    if (identical(this, other)) return true;
+
+    return other.cityName == cityName &&
+        other.description == description &&
+        other.temperature == temperature &&
+        other.feelsLike == feelsLike &&
+        other.humidity == humidity &&
+        other.seaLevel == seaLevel &&
+        other.windSpeed == windSpeed;
+  }
+
+  @override
+  int get hashCode {
+    return cityName.hashCode ^
+        description.hashCode ^
+        temperature.hashCode ^
+        feelsLike.hashCode ^
+        humidity.hashCode ^
+        seaLevel.hashCode ^
+        windSpeed.hashCode;
+  }
+}

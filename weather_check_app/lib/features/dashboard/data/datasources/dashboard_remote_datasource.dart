@@ -18,7 +18,8 @@ class DashboardRemoteDatasource implements IDashboardRemoteDatasource {
       'appid': apiKey,
       'units': 'metric'
     });
-    return Weather(name: 'oi');
+    final weather = Weather.fromMap(response.data as Map<String, dynamic>);
+    return weather;
   }
 }
 

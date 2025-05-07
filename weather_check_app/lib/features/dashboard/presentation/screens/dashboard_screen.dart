@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:weather_checking/constants/app_colors.dart';
 import 'package:weather_checking/features/dashboard/domain/user_location.dart';
 import 'package:weather_checking/features/dashboard/presentation/providers/get_weather_provider.dart';
 
@@ -13,12 +13,6 @@ class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key, required this.name});
 
   final String name;
-
-  // void _getLocation(bool permission) async {
-  //   final position = await Geolocator.getCurrentPosition(
-  //       locationSettings: LocationSettings(accuracy: LocationAccuracy.medium));
-  //   debugPrint('resultado $position');
-  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,35 +27,63 @@ class DashboardScreen extends ConsumerWidget {
             ref.read(getWeatherQueryProvider.notifier).state = Some(
               UserLocation(latitude: data.latitude, longitude: data.longitude),
             );
-            debugPrint('ALOOO $data');
           }
         },
       );
     });
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Hi $name'),
-          locationPermission.when(
-              data: (position) {
-                if (position != null) {}
-                return ElevatedButton(
-                  onPressed: () {
-                    context.goNamed(RoutesStrings.login);
-                  },
-                  child: Text('logout'),
-                );
-              },
-              error: (error, _) => Text('erro $error'),
-              loading: () => const CircularProgressIndicator())
 
-          // ElevatedButton(
-          //     onPressed: locationPermission.isLoading
-          //         ? null
-          //         : () => _getLocation(true),
-          //     child: Text('getlocation')),
-        ],
+    ref.listen(getWeatherStatusProvider, (_, next) {
+      next.whenData((weather) {
+        if (weather != null) {
+          debugPrint('now i have $weather');
+        }
+      });
+    });
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Hi $name'),
+            locationPermission.when(
+                data: (position) {
+                  if (position != null) {}
+                  return ElevatedButton(
+                    onPressed: () {
+                      context.goNamed(RoutesStrings.login);
+                    },
+                    child: Text('logout'),
+                  );
+                },
+                error: (error, _) => Text('erro $error'),
+                loading: () => const CircularProgressIndicator()),
+            ElevatedButton(
+                onPressed: () {
+                  context.goNamed(RoutesStrings.login);
+                },
+                child: Text('sair')),
+            state.when(
+                data: (weather) {
+                  if (weather != null) {
+                    return Column(
+                      children: [
+                        Text('The weather now in ${weather.cityName} is:'),
+                        Text('${weather.temperature} degrees Celsius'),
+                        Text(
+                            'It feels like ${weather.feelsLike} degrees Celsius'),
+                        Text('The humidity is at ${weather.humidity}%'),
+                        Text('and the wind speed is ${weather.windSpeed}m/s'),
+                      ],
+                    );
+                  } else {
+                    return const Text('No weather conditions');
+                  }
+                },
+                error: (error, _) => Text('error $error'),
+                loading: () => const LinearProgressIndicator()),
+          ],
+        ),
       ),
     );
   }
